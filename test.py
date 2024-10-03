@@ -25,11 +25,11 @@ if submit_button:
     # Leer el archivo Excel existente
     df = pd.read_excel(file_path)
 
-    # Crear una nueva fila con los datos ingresados
-    nueva_fila = {"DNI": dni, "Nombre": nombre, "Apellido": apellido}
+    # Crear un DataFrame con la nueva fila de datos ingresados
+    nueva_fila = pd.DataFrame({"DNI": [dni], "Nombre": [nombre], "Apellido": [apellido]})
 
-    # Agregar la nueva fila al DataFrame
-    df = df.append(nueva_fila, ignore_index=True)
+    # Concatenar el nuevo DataFrame con el existente
+    df = pd.concat([df, nueva_fila], ignore_index=True)
 
     # Guardar el DataFrame actualizado en el archivo Excel
     df.to_excel(file_path, index=False)
