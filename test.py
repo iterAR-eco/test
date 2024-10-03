@@ -1,9 +1,19 @@
 import streamlit as st
 import pandas as pd
 import os
+from git import Repo
 
 # Archivo Excel donde se guardarán los datos
 file_path = "datos_ingresados.xlsx"
+
+# Clonar el repositorio en el que quieres guardar el archivo
+repo_dir = "/ruta/local/repo"
+if not os.path.exists(repo_dir):
+    repo_url = "https://github.com/tu_usuario/tu_repositorio.git"
+    Repo.clone_from(repo_url, repo_dir)
+
+repo = Repo(repo_dir)
+file_path = os.path.join(repo_dir, "datos_ingresados.xlsx")
 
 # Crear archivo Excel si no existe
 if not os.path.exists(file_path):
@@ -34,9 +44,10 @@ if submit_button:
     # Guardar el DataFrame actualizado en el archivo Excel
     df.to_excel(file_path, index=False)
 
+    # Agregar y hacer commit al repositorio
+    repo.git.add(file_path)
+    repo.git.commit('-m', 'Datos actualizados')
+    repo.git.push()
+
     # Mostrar mensaje de agradecimiento
     st.success("Gracias por ingresar sus datos")
-
-    # Mostrar los datos guardados
-    st.write("Datos actuales en el archivo Excel:")
-    st.dataframe(df)
