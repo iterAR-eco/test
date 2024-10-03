@@ -9,7 +9,7 @@ file_path = "datos_ingresados.xlsx"
 # Clonar el repositorio en el que quieres guardar el archivo
 repo_dir = "/ruta/local/repo"
 if not os.path.exists(repo_dir):
-    repo_url = "https://github.com/iterAR-eco/test.git"
+    repo_url = "https://github.com/iterAR-eco/test"
     Repo.clone_from(repo_url, repo_dir)
 
 repo = Repo(repo_dir)
